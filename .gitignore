@@ -1,0 +1,239 @@
+# ============================================================
+# Unity
+# ============================================================
+
+# Unity generated project data
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# Unity memory captures and recordings
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+
+# Unity crash/debug files
+sysinfo.txt
+debug.log
+*.log
+
+# Unity temporary marker
+.utmp/
+
+# Unity-generated cache inside Assets
+/[Aa]ssets/[Ss]ceneDependencyCache*
+
+# ============================================================
+# Unity Asset Metadata
+# ============================================================
+
+# IMPORTANT:
+# Do NOT ignore normal *.meta files.
+#
+# Unity .meta files must be committed alongside their assets.
+#
+# Only generated metadata associated with ignored/generated
+# files is ignored below.
+
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# ============================================================
+# Unity Builds
+# ============================================================
+
+# Build output
+*.apk
+*.aab
+*.app
+*.unitypackage
+
+# Common custom build directories
+/Build/
+/Builds/
+/Bin/
+
+# ============================================================
+# Addressables
+# ============================================================
+
+# Addressables generated build data
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+
+# Addressables generated link.xml
+/[Aa]ssets/AddressableAssetsData/link.xml*
+
+# Addressables build output
+/[Ss]erver[Dd]ata/
+
+# Android Addressables generated content
+/[Aa]ssets/[Ss]treamingAssets/aa*
+
+# ============================================================
+# Unity Visual Scripting
+# ============================================================
+
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
+
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property\ Providers
+/[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property\ Providers.meta
+
+# ============================================================
+# Unity Test Framework
+# ============================================================
+
+# Auto-generated play mode test scenes
+/[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# ============================================================
+# UI Toolkit
+# ============================================================
+
+# Generated UI Toolkit schema
+/UIElementsSchema/
+
+# ============================================================
+# IDE / Editor
+# ============================================================
+
+# Visual Studio
+.vs/
+.vscode/
+
+# JetBrains Rider / IntelliJ
+.idea/
+
+# Rider-generated Unity plugin
+/[Aa]ssets/Plugins/Editor/JetBrains*
+
+# Rider personal settings
+*.DotSettings.user
+
+# Gradle
+.gradle/
+
+# Consulo
+.consulo/
+
+# ============================================================
+# Visual Studio / C# generated files
+# ============================================================
+
+# Unity-generated solution/project files
+ExportedObj/
+
+*.csproj
+*.unityproj
+*.sln
+*.slnx
+
+# Visual Studio user files
+*.suo
+*.user
+*.userprefs
+
+# Temporary IDE files
+*.tmp
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# ============================================================
+# .NET / Build artifacts
+# ============================================================
+
+bin/
+obj/
+
+# ============================================================
+# Crash / profiling / debugging
+# ============================================================
+
+mono_crash.*
+*.stackdump
+
+# ============================================================
+# Blender
+# ============================================================
+
+# Blender backup files
+*.blend1
+*.blend1.meta
+
+# ============================================================
+# macOS
+# ============================================================
+
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# macOS Finder metadata
+._*
+
+# ============================================================
+# Windows
+# ============================================================
+
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+# Windows image file caches
+*.stackdump
+
+# ============================================================
+# Package / generated files
+# ============================================================
+
+# Crashlytics
+crashlytics-build.properties
+
+# ============================================================
+# Unity Recorder
+# ============================================================
+
+/[Rr]ecordings/
+
+# ============================================================
+# Optional: Asset Store Tools
+# ============================================================
+#
+# Uncomment if you don't want Asset Store Tools committed.
+#
+# /[Aa]ssets/AssetStoreTools*
+
+# ============================================================
+# Optional: Unity package manager / CI generated files
+# ============================================================
+
+upm-ci~/
+upm-ci.log
+
+# ============================================================
+# Project-specific generated files
+# ============================================================
+
+# Build reports
+/[Aa]ssets/BuildReports*
+
+# Test results
+TestResult.xml
+test-results/
+
+# Generated package artifacts
+*.tgz
+
+# Temporary patch/original files
+*.orig
+*.orig.meta
