@@ -48,6 +48,27 @@ public class Handgun : MonoBehaviour
         }
     }
 
+    public void SetBulletSpawnLocalPosition(Vector3 localPosition)
+    {
+        if (bulletSpawnPos != null)
+        {
+            bulletSpawnPos.localPosition = localPosition;
+        }
+    }
+
+
+    public bool TryGetMuzzleRay(out Ray ray)
+    {
+        if (bulletSpawnPos == null)
+        {
+            ray = default;
+            return false;
+        }
+
+        ray = new Ray(bulletSpawnPos.position, bulletSpawnPos.forward);
+        return true;
+    }
+
     private void OnDestroy()
     {
         if (shootInput != null)
@@ -66,12 +87,27 @@ public class Handgun : MonoBehaviour
     private void Shoot()
     {
         PlayShootSound();
+        ActivateMenuButtonAlongMuzzle();
         SpawnBullet();
+    }
+
+    private void ActivateMenuButtonAlongMuzzle()
+    {
+        if (!TryGetMuzzleRay(out Ray ray))
+        {
+            return;
+        }
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 20f, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide))
+        {
+            VRShootableButton shootableButton = hit.collider.GetComponentInParent<VRShootableButton>();
+            shootableButton?.Activate();
+        }
     }
 
     private void PlayShootSound()
     {
-        if (!audioSource) return;
+        if (!audioSource || !shotSound) return;
         audioSource.PlayOneShot(shotSound);
     }
 

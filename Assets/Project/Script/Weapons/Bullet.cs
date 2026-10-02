@@ -23,6 +23,8 @@ public class Bullet : MonoBehaviour
         {
             Debug.LogWarning("Handgun:: hitSound not set!");
         }
+
+        rigidBody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
     void Start()
@@ -33,6 +35,24 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        MovingTarget target = collision.collider.GetComponentInParent<MovingTarget>();
+        if (target != null && collision.contactCount > 0)
+        {
+            target.RegisterHit(collision.GetContact(0).point);
+        }
+
+        PlayHitSoundAndDestroy();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        VRShootableButton shootableButton = other.GetComponentInParent<VRShootableButton>();
+        if (shootableButton == null)
+        {
+            return;
+        }
+
+        shootableButton.Activate();
         PlayHitSoundAndDestroy();
     }
 
