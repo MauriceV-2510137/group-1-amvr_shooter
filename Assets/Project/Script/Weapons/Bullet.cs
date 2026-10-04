@@ -35,6 +35,7 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //??
         MovingTarget target = collision.collider.GetComponentInParent<MovingTarget>();
         if (target != null && collision.contactCount > 0)
         {
@@ -46,13 +47,11 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //??
         VRShootableButton shootableButton = other.GetComponentInParent<VRShootableButton>();
-        if (shootableButton == null)
-        {
-            return;
-        }
-
+        if (shootableButton == null) return;
         shootableButton.Activate();
+
         PlayHitSoundAndDestroy();
     }
 

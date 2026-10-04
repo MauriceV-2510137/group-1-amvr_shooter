@@ -113,7 +113,7 @@ public class VRGameplayBootstrap : MonoBehaviour
 
     private Transform CreateTrackedHand(Transform parent, string handName, string deviceBinding)
     {
-        GameObject handObject = new GameObject(handName);
+        GameObject handObject = new(handName);
         handObject.transform.SetParent(parent, false);
         VRTrackedHand trackedHand = handObject.AddComponent<VRTrackedHand>();
         trackedHand.Initialize(deviceBinding);
@@ -131,8 +131,7 @@ public class VRGameplayBootstrap : MonoBehaviour
 
         Transform gunTransform = handgun.transform;
         gunTransform.SetParent(rightHand, false);
-        gunTransform.localPosition = new Vector3(0f, -0.08f, 0.12f);
-        gunTransform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        gunTransform.SetLocalPositionAndRotation(new Vector3(0f, -0.08f, 0.12f), Quaternion.Euler(90f, 0f, 0f));
         handgun.SetBulletSpawnLocalPosition(new Vector3(0f, 0f, 0.16f));
         handgun.SetHeld(true);
     }
@@ -143,13 +142,13 @@ public class VRGameplayBootstrap : MonoBehaviour
         int[] maximumScores = { 50, 75, 100, 150, 250, 50, 100 };
         Color[] targetColors =
         {
-            new Color(0.95f, 0.12f, 0.08f),
-            new Color(1f, 0.55f, 0.05f),
-            new Color(1f, 0.9f, 0.05f),
-            new Color(0.15f, 0.85f, 0.95f),
-            new Color(0.95f, 0.2f, 0.9f),
-            new Color(0.95f, 0.12f, 0.08f),
-            new Color(1f, 0.9f, 0.05f)
+            new(0.95f, 0.12f, 0.08f),
+            new(1f, 0.55f, 0.05f),
+            new(1f, 0.9f, 0.05f),
+            new(0.15f, 0.85f, 0.95f),
+            new(0.95f, 0.2f, 0.9f),
+            new(0.95f, 0.12f, 0.08f),
+            new(1f, 0.9f, 0.05f)
         };
 
         for (int index = 0; index < targetSizes.Length; index++)
@@ -300,7 +299,7 @@ public class VRGameplayBootstrap : MonoBehaviour
             shader = Shader.Find("Standard");
         }
 
-        Material material = new Material(shader)
+        Material material = new(shader)
         {
             name = materialName,
             color = color
@@ -370,8 +369,7 @@ public class VRTrackedHand : MonoBehaviour
             return;
         }
 
-        transform.localPosition = positionAction.ReadValue<Vector3>();
-        transform.localRotation = rotationAction.ReadValue<Quaternion>();
+        transform.SetLocalPositionAndRotation(positionAction.ReadValue<Vector3>(), rotationAction.ReadValue<Quaternion>());
     }
 
     private void OnDestroy()

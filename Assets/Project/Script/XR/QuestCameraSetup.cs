@@ -7,20 +7,15 @@ public class QuestCameraSetup : MonoBehaviour
 {
     private void Awake()
     {
-        Camera camera = GetComponent<Camera>();
-        if (camera == null)
-        {
-            return;
-        }
+        if (!TryGetComponent<Camera>(out var camera)) return;
 
         Transform cameraTransform = camera.transform;
-        Vector3 cameraPosition = cameraTransform.position;
-        Quaternion cameraRotation = cameraTransform.rotation;
+        cameraTransform.GetPositionAndRotation(out Vector3 cameraPosition, out Quaternion cameraRotation);
 
         XROrigin xrOrigin = camera.GetComponentInParent<XROrigin>();
         if (xrOrigin == null)
         {
-            GameObject originObject = new GameObject("XR Origin");
+            GameObject originObject = new("XR Origin");
             originObject.transform.SetPositionAndRotation(cameraPosition, cameraRotation);
             cameraTransform.SetParent(originObject.transform, true);
             xrOrigin = originObject.AddComponent<XROrigin>();
@@ -28,8 +23,7 @@ public class QuestCameraSetup : MonoBehaviour
 
         xrOrigin.Camera = camera;
 
-        TrackedPoseDriver poseDriver = camera.GetComponent<TrackedPoseDriver>();
-        if (poseDriver == null)
+        if (!camera.TryGetComponent<TrackedPoseDriver>(out var poseDriver))
         {
             poseDriver = camera.gameObject.AddComponent<TrackedPoseDriver>();
         }

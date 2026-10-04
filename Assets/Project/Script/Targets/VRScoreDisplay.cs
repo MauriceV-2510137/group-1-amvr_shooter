@@ -7,17 +7,16 @@ public class VRScoreDisplay : MonoBehaviour
 
     public static VRScoreDisplay Create(Transform cameraTransform)
     {
-        GameObject canvasObject = new GameObject("VR Score Display");
+        GameObject canvasObject = new("VR Score Display");
         canvasObject.transform.SetParent(cameraTransform, false);
-        canvasObject.transform.localPosition = new Vector3(0f, -0.25f, 1f);
-        canvasObject.transform.localRotation = Quaternion.identity;
+        canvasObject.transform.SetLocalPositionAndRotation(new Vector3(0f, -0.25f, 1f), Quaternion.identity);
         canvasObject.transform.localScale = Vector3.one * 0.0015f;
 
         Canvas canvas = canvasObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
         canvasObject.AddComponent<CanvasScaler>();
 
-        GameObject textObject = new GameObject("Score Text");
+        GameObject textObject = new("Score Text");
         textObject.transform.SetParent(canvasObject.transform, false);
         RectTransform rectTransform = textObject.AddComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(500f, 150f);

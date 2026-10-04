@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Renderer))]
 public class MovingTarget : MonoBehaviour
 {
     [SerializeField] private int maximumScore = 100;
@@ -20,8 +21,14 @@ public class MovingTarget : MonoBehaviour
     private void Awake()
     {
         targetScale = transform.localScale;
-        targetRenderer = GetComponent<Renderer>();
-        targetCollider = GetComponent<Collider>();
+        if (!TryGetComponent(out targetRenderer))
+        {
+            Debug.LogWarning("MovingTarget::didnt find Renderer component!");
+        }
+        if(!TryGetComponent(out targetCollider))
+        {
+            Debug.LogWarning("MovingTarget::didnt find Collider component!");
+        }
     }
 
     public void Initialize(Vector3 direction, float offset)
@@ -99,7 +106,7 @@ public class MovingTarget : MonoBehaviour
 
     private void CreateExplosion()
     {
-        GameObject explosionObject = new GameObject("Target Hit Explosion");
+        GameObject explosionObject = new("Target Hit Explosion");
         explosionObject.transform.position = transform.position;
         ParticleSystem particleSystem = explosionObject.AddComponent<ParticleSystem>();
 

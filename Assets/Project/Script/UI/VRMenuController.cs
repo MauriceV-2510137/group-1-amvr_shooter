@@ -17,11 +17,10 @@ public class VRMenuController : MonoBehaviour
 
     public static VRMenuController Create(Transform leftHandTransform, Transform rightHandTransform, Transform headsetTransform, VRGameplayBootstrap gameplayBootstrap)
     {
-        GameObject menuObject = new GameObject("VR Menu");
+        GameObject menuObject = new("VR Menu");
         menuObject.transform.SetParent(leftHandTransform, false);
-        menuObject.transform.localPosition = new Vector3(0.2f, 0.1f, 0.25f);
-        menuObject.transform.localRotation = Quaternion.identity;
-        menuObject.transform.localScale = Vector3.one * 0.00095f;
+        menuObject.transform.SetLocalPositionAndRotation(new Vector3(0.2f, 0.1f, 0.25f), Quaternion.identity);
+        menuObject.transform.localScale = Vector3.one * 0.00095f; // ???
 
         VRMenuController menu = menuObject.AddComponent<VRMenuController>();
         menu.gameplay = gameplayBootstrap;
@@ -129,7 +128,7 @@ public class VRMenuController : MonoBehaviour
 
     private InputAction CreateAction(string actionName, params string[] bindings)
     {
-        InputAction action = new InputAction(actionName, InputActionType.Button);
+        InputAction action = new(actionName, InputActionType.Button);
         foreach (string binding in bindings)
         {
             action.AddBinding(binding);
@@ -139,7 +138,7 @@ public class VRMenuController : MonoBehaviour
 
     private void CreateLabel(Transform parent, string label, int fontSize, Color color)
     {
-        GameObject labelObject = new GameObject(label);
+        GameObject labelObject = new(label);
         labelObject.transform.SetParent(parent, false);
         Text text = labelObject.AddComponent<Text>();
         text.text = label;
@@ -153,7 +152,7 @@ public class VRMenuController : MonoBehaviour
 
     private VRShootableButton CreateButton(Transform parent, string label, UnityEngine.Events.UnityAction action)
     {
-        GameObject buttonObject = new GameObject(label);
+        GameObject buttonObject = new(label);
         buttonObject.transform.SetParent(parent, false);
         Image image = buttonObject.AddComponent<Image>();
         image.color = new Color(0.04f, 0.18f, 0.25f, 0.72f);
@@ -275,8 +274,7 @@ public class VRShootableButton : MonoBehaviour
 
     public void SetInteractionEnabled(bool enabled)
     {
-        Collider collider = GetComponent<Collider>();
-        if (collider != null)
+        if (TryGetComponent<Collider>(out var collider))
         {
             collider.enabled = enabled;
         }
