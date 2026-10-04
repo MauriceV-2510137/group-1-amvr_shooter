@@ -30,7 +30,7 @@ public class VRGameplayBootstrap : MonoBehaviour
         }
 
         xrOriginTransform = xrOrigin.transform;
-        CreateEnvironment(xrOriginTransform);
+        //CreateEnvironment(xrOriginTransform);
         VRScoreManager.ResetRound(roundDuration);
         floorHeight = xrOriginTransform.position.y;
         cameraTransform = xrOrigin.Camera != null ? xrOrigin.Camera.transform : transform;
@@ -187,17 +187,11 @@ public class VRGameplayBootstrap : MonoBehaviour
 
     private Vector3 GetRandomTargetPosition(Transform origin)
     {
-        Vector3 position;
-        do
-        {
-            float forwardOffset = Random.Range(-8f, 8f);
-            float rightOffset = Random.Range(-8f, 8f);
-            float height = Random.Range(1.1f, 3.8f);
-            position = origin.position + origin.forward * forwardOffset + origin.right * rightOffset + Vector3.up * height;
-        }
-        while (Vector3.ProjectOnPlane(position - origin.position, Vector3.up).sqrMagnitude < 6.25f);
-
-        return position;
+        float angle = Random.Range(0f, Mathf.PI * 2f);
+        float radius = Random.Range(3.5f, 7.5f);
+        Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * radius;
+        float height = Random.Range(1.1f, 3.8f);
+        return origin.position + offset + Vector3.up * height;
     }
 
     private Vector3 GetRandomTargetDirection(Transform origin)
