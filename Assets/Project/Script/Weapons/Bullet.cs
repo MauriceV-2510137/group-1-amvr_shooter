@@ -35,7 +35,12 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //??
+        EnemyTarget enemy = collision.collider.GetComponentInParent<EnemyTarget>();
+        if (enemy != null && collision.contactCount > 0)
+        {
+            enemy.TakeDamage(10f, collision.collider);
+        }
+
         MovingTarget target = collision.collider.GetComponentInParent<MovingTarget>();
         if (target != null && collision.contactCount > 0)
         {

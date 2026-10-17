@@ -18,9 +18,12 @@ public class VRMenuController : MonoBehaviour
     public static VRMenuController Create(Transform leftHandTransform, Transform rightHandTransform, Transform headsetTransform, VRGameplayBootstrap gameplayBootstrap)
     {
         GameObject menuObject = new("VR Menu");
-        menuObject.transform.SetParent(leftHandTransform, false);
-        menuObject.transform.SetLocalPositionAndRotation(new Vector3(0.2f, 0.1f, 0.25f), Quaternion.identity);
-        menuObject.transform.localScale = Vector3.one * 0.00095f; // ???
+        Transform menuParent = headsetTransform != null ? headsetTransform : leftHandTransform;
+        menuObject.transform.SetParent(menuParent, false);
+        menuObject.transform.SetLocalPositionAndRotation(
+            new Vector3(0f, -0.2f, 1.1f),
+            Quaternion.identity);
+        menuObject.transform.localScale = Vector3.one * 0.0015f;
 
         VRMenuController menu = menuObject.AddComponent<VRMenuController>();
         menu.gameplay = gameplayBootstrap;

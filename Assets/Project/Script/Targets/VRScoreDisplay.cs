@@ -9,21 +9,22 @@ public class VRScoreDisplay : MonoBehaviour
     {
         GameObject canvasObject = new("VR Score Display");
         canvasObject.transform.SetParent(cameraTransform, false);
-        canvasObject.transform.SetLocalPositionAndRotation(new Vector3(0f, -0.25f, 1f), Quaternion.identity);
+        canvasObject.transform.SetLocalPositionAndRotation(new Vector3(0f, 0.62f, 1.05f), Quaternion.identity);
         canvasObject.transform.localScale = Vector3.one * 0.0015f;
 
         Canvas canvas = canvasObject.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.WorldSpace;
+        canvas.sortingOrder = 10;
         canvasObject.AddComponent<CanvasScaler>();
 
         GameObject textObject = new("Score Text");
         textObject.transform.SetParent(canvasObject.transform, false);
         RectTransform rectTransform = textObject.AddComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(500f, 150f);
+        rectTransform.sizeDelta = new Vector2(500f, 120f);
 
         Text text = textObject.AddComponent<Text>();
         text.alignment = TextAnchor.MiddleCenter;
-        text.fontSize = 42;
+        text.fontSize = 36;
         text.color = Color.white;
         text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
 

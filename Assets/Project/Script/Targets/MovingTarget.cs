@@ -9,6 +9,7 @@ public class MovingTarget : MonoBehaviour
     [SerializeField] private int minimumScore = 10;
     [SerializeField] private float moveAmplitude = 1.25f;
     [SerializeField] private float moveSpeed = 1.5f;
+    [SerializeField] private float lifetime = 8f;
 
     private Vector3 startPosition;
     private Vector3 moveDirection;
@@ -17,6 +18,8 @@ public class MovingTarget : MonoBehaviour
     private Renderer targetRenderer;
     private Collider targetCollider;
     private bool isHit;
+    private bool isRespawning;
+    private Coroutine lifetimeCoroutine;
 
     private void Awake()
     {
@@ -36,6 +39,7 @@ public class MovingTarget : MonoBehaviour
         startPosition = transform.position;
         moveDirection = direction.normalized;
         moveOffset = offset;
+        RestartLifetime();
     }
 
     public void ConfigureTier(int maximumTierScore, int minimumTierScore, Color tierColor)
@@ -81,6 +85,11 @@ public class MovingTarget : MonoBehaviour
 
     public void ResetTarget(Vector3 position, Vector3 direction, float offset)
     {
+        if (lifetimeCoroutine != null)
+        {
+            StopCoroutine(lifetimeCoroutine);
+        }
+
         transform.position = position;
         transform.localScale = targetScale;
         startPosition = position;
@@ -89,19 +98,62 @@ public class MovingTarget : MonoBehaviour
         targetRenderer.enabled = true;
         targetCollider.enabled = true;
         isHit = false;
+        isRespawning = false;
+        RestartLifetime();
     }
 
     private IEnumerator RespawnAfterHit()
     {
         yield return new WaitForSeconds(0.4f);
+        Respawn();
+    }
 
-        if (VRGameplayBootstrap.Instance == null)
+    private IEnumerator HideAfterLifetime()
+    {
+        yield return new WaitForSeconds(lifetime);
+
+        if (!isHit)
         {
-            Destroy(gameObject);
-            yield break;
+            isHit = true;
+            targetRenderer.enabled = false;
+            targetCollider.enabled = false;
+            Respawn();
+        }
+    }
+
+    private void RestartLifetime()
+    {
+        if (lifetimeCoroutine != null)
+        {
+            StopCoroutine(lifetimeCoroutine);
         }
 
-        VRGameplayBootstrap.Instance.RespawnTarget(this);
+        lifetimeCoroutine = StartCoroutine(HideAfterLifetime());
+    }
+
+    private void Respawn()
+    {
+        if (isRespawning)
+        {
+            return;
+        }
+
+        isRespawning = true;
+
+        VRGameplayBootstrap bootstrap = VRGameplayBootstrap.Instance;
+        if (bootstrap == null)
+        {
+            bootstrap = FindFirstObjectByType<VRGameplayBootstrap>();
+        }
+
+        if (bootstrap == null)
+        {
+            Debug.LogError($"Cannot respawn target {name}: VRGameplayBootstrap is missing.");
+            isRespawning = false;
+            return;
+        }
+
+        bootstrap.RespawnTarget(this);
     }
 
     private void CreateExplosion()
