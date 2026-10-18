@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 13bcd899655b26a429d6297f2dbc8894
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 279263
+  packageName: Horror Game Bloodied Bucket Prop
+  packageVersion: 1.0
+  assetPath: Assets/Art/HorrorGameBucket/Material/bucket.mat
+  uploadId: 649651

@@ -808,6 +808,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5353592469657083960}
   - component: {fileID: 6333950200981717186}
+  - component: {fileID: 8681461306031946268}
   m_Layer: 0
   m_Name: Bob
   m_TagString: Untagged
@@ -859,6 +860,29 @@ MonoBehaviour:
   maximumActiveTargets: 40
   additionalTargetMinimumRadius: 8
   additionalTargetMaximumRadius: 14
+--- !u!114 &8681461306031946268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5209421060439189941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8773930a6d61920438bcb25c49548a9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyTarget
+  maxHealth: 100
+  damagePerShot: 10
+  sightRange: 30
+  attackRange: 2.2
+  attackCooldown: 1.25
+  projectileSpeed: 18
+  projectileLifetime: 3
+  wanderRadius: 6
+  wanderInterval: 3
+  moveSpeed: 1.4
+  playerLayer: 0
 --- !u!1 &5415349011288180156
 GameObject:
   m_ObjectHideFlags: 0
