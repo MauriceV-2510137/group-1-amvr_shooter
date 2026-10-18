@@ -52,7 +52,6 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //??
         VRShootableButton shootableButton = other.GetComponentInParent<VRShootableButton>();
         if (shootableButton == null) return;
         shootableButton.Activate();

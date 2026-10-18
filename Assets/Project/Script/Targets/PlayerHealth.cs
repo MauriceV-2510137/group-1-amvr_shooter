@@ -119,7 +119,7 @@ public class PlayerHealth : MonoBehaviour
         GameObject textObject = new(objectName);
         textObject.transform.SetParent(parent, false);
         Text text = textObject.AddComponent<Text>();
-        text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         text.color = color;
         return text;
     }

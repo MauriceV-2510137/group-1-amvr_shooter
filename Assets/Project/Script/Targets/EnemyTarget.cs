@@ -388,7 +388,7 @@ public class EnemyTarget : MonoBehaviour
         textObject.transform.SetParent(parent, false);
         Text text = textObject.AddComponent<Text>();
         text.color = color;
-        text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         text.rectTransform.anchorMin = Vector2.zero;
         text.rectTransform.anchorMax = Vector2.one;
         text.rectTransform.offsetMin = Vector2.zero;

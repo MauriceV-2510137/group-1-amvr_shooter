@@ -845,6 +845,10 @@ MonoBehaviour:
   moveSpeed: 2
   jumpSpeed: 5.5
   roundDuration: 120
+  additionalTargetSpawnInterval: 2
+  maximumActiveTargets: 40
+  additionalTargetMinimumRadius: 8
+  additionalTargetMaximumRadius: 14
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,70 +1010,6 @@ Transform:
   - {fileID: 2034052123}
   - {fileID: 1015874778}
   - {fileID: 1027048828}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &535889479
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 535889481}
-  - component: {fileID: 535889480}
-  m_Layer: 0
-  m_Name: NavMesh Surface
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &535889480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535889479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
-  m_SerializedVersion: 0
-  m_AgentTypeID: 0
-  m_CollectObjects: 0
-  m_Size: {x: 10, y: 10, z: 10}
-  m_Center: {x: 0, y: 2, z: 0}
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_UseGeometry: 0
-  m_DefaultArea: 0
-  m_GenerateLinks: 0
-  m_IgnoreNavMeshAgent: 1
-  m_IgnoreNavMeshObstacle: 1
-  m_OverrideTileSize: 0
-  m_TileSize: 256
-  m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.16666667
-  m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: d8e113a19b7993c47a5b58e9ef4d837f, type: 2}
-  m_BuildHeightMesh: 0
---- !u!4 &535889481
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 535889479}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.08906, y: 0, z: -6.2943}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &559926684
@@ -3913,17 +3853,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d7e2f6a4c8143b8a1e5d9c7f0b6a284, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  damagePerShot: 10
-  sightRange: 30
-  attackRange: 2.2
-  attackCooldown: 1.25
-  projectileSpeed: 18
-  projectileLifetime: 3
-  wanderRadius: 6
-  wanderInterval: 3
   moveSpeed: 1.4
-  playerLayer: 0
+  jumpSpeed: 5.5
+  roundDuration: 120
+  additionalTargetSpawnInterval: 2
+  maximumActiveTargets: 40
+  additionalTargetMinimumRadius: 8
+  additionalTargetMaximumRadius: 14
 --- !u!195 &1740466155
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3931,7 +3867,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1740466152}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 6
@@ -4536,4 +4472,3 @@ SceneRoots:
   - {fileID: 150984731}
   - {fileID: 1210377126}
   - {fileID: 1740466153}
-  - {fileID: 535889481}

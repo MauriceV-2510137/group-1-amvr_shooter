@@ -48,7 +48,6 @@ public class Handgun : MonoBehaviour
         }
     }
 
-    //??
     public void SetBulletSpawnLocalPosition(Vector3 localPosition)
     {
         if (bulletSpawnPos != null)
@@ -56,7 +55,6 @@ public class Handgun : MonoBehaviour
             bulletSpawnPos.localPosition = localPosition;
         }
     }
-
 
     public bool TryGetMuzzleRay(out Ray ray)
     {
@@ -88,11 +86,11 @@ public class Handgun : MonoBehaviour
     private void Shoot()
     {
         PlayShootSound();
-        ActivateMenuButtonAlongMuzzle(); //??
+        ActivateMenuButtonAlongMuzzle();
         SpawnBullet();
     }
 
-    private void ActivateMenuButtonAlongMuzzle() //??
+    private void ActivateMenuButtonAlongMuzzle()
     {
         if (!TryGetMuzzleRay(out Ray ray))
         {
