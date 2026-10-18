@@ -13,6 +13,9 @@ public class VRGameplayBootstrap : MonoBehaviour
     [SerializeField] private int maximumActiveTargets = 40;
     [SerializeField] private float additionalTargetMinimumRadius = 8f;
     [SerializeField] private float additionalTargetMaximumRadius = 14f;
+    [SerializeField] private float standingHeight = 1.7f;
+    [SerializeField] private float crouchingHeight = 0.85f;
+    [SerializeField] private float minimumHeadHeight = 0.65f;
 
     private CharacterController characterController;
     private InputAction moveAction;
@@ -55,9 +58,9 @@ public class VRGameplayBootstrap : MonoBehaviour
                 characterController = xrOrigin.gameObject.AddComponent<CharacterController>();
             }
 
-            characterController.height = 1.7f;
+            characterController.height = standingHeight;
             characterController.radius = 0.25f;
-            characterController.center = new Vector3(0f, 0.85f, 0f);
+            characterController.center = new Vector3(0f, standingHeight * 0.5f, 0f);
             characterController.skinWidth = 0.03f;
             characterController.stepOffset = 0.3f;
             characterController.minMoveDistance = 0f;
@@ -78,12 +81,11 @@ public class VRGameplayBootstrap : MonoBehaviour
 
             Transform leftHand = CreateTrackedHand(xrOrigin.transform, "Left Hand", "<XRController>{LeftHand}");
             Transform rightHand = CreateTrackedHand(xrOrigin.transform, "Right Hand", "<XRController>{RightHand}");
-            AttachGunToHand(rightHand);
+            CreateGunInteraction(leftHand, rightHand);
             CreateMenu(leftHand, rightHand);
         }
         else
         {
-            AttachGunToHand(null);
             CreateMenu(null, null);
         }
 
@@ -149,6 +151,7 @@ public class VRGameplayBootstrap : MonoBehaviour
         }
 
         Vector2 input = moveAction.ReadValue<Vector2>();
+        UpdateCharacterControllerHeight();
         Vector3 forward = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
         Vector3 right = Vector3.ProjectOnPlane(cameraTransform.right, Vector3.up).normalized;
         Vector3 movement = (forward * input.y + right * input.x) * moveSpeed;
@@ -160,6 +163,14 @@ public class VRGameplayBootstrap : MonoBehaviour
         xrOriginTransform.position = stableOriginPosition;
         VRScoreManager.Tick(Time.deltaTime);
         SpawnAdditionalTargetIfNeeded();
+    }
+
+    private void UpdateCharacterControllerHeight()
+    {
+        float headHeight = Mathf.Max(minimumHeadHeight, cameraTransform.position.y - floorHeight);
+        float targetHeight = Mathf.Clamp(headHeight, crouchingHeight, standingHeight);
+        characterController.height = targetHeight;
+        characterController.center = new Vector3(0f, targetHeight * 0.5f, 0f);
     }
 
     private void SpawnAdditionalTargetIfNeeded()
@@ -197,28 +208,84 @@ public class VRGameplayBootstrap : MonoBehaviour
     {
         GameObject handObject = new(handName);
         handObject.transform.SetParent(parent, false);
+        CreateHandVisual(handObject.transform, handName == "Left Hand");
         VRTrackedHand trackedHand = handObject.AddComponent<VRTrackedHand>();
         trackedHand.Initialize(deviceBinding);
         return handObject.transform;
     }
 
-    private void AttachGunToHand(Transform rightHand)
+    private static void CreateHandVisual(Transform hand, bool isLeftHand)
     {
-        Handgun handgun = FindFirstObjectByType<Handgun>();
-        if (handgun == null || rightHand == null)
+        Color handColor = isLeftHand
+            ? new Color(0.15f, 0.55f, 1f, 1f)
+            : new Color(1f, 0.35f, 0.2f, 1f);
+
+        GameObject palm = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        palm.name = "Hand Visual";
+        palm.transform.SetParent(hand, false);
+        palm.transform.localScale = new Vector3(0.13f, 0.08f, 0.16f);
+        ApplyHandVisualMaterial(palm, handColor);
+        RemoveVisualCollider(palm);
+
+        GameObject wrist = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        wrist.name = "Wrist Visual";
+        wrist.transform.SetParent(hand, false);
+        wrist.transform.localPosition = new Vector3(0f, 0f, -0.11f);
+        wrist.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+        wrist.transform.localScale = new Vector3(0.045f, 0.08f, 0.045f);
+        ApplyHandVisualMaterial(wrist, handColor);
+        RemoveVisualCollider(wrist);
+    }
+
+    private static void ApplyHandVisualMaterial(GameObject visual, Color color)
+    {
+        Renderer renderer = visual.GetComponent<Renderer>();
+        if (renderer == null)
         {
-            if (handgun == null)
-            {
-                Debug.LogWarning("VRGameplayBootstrap could not find a Handgun in the scene.");
-            }
             return;
         }
 
-        Transform gunTransform = handgun.transform;
-        gunTransform.SetParent(rightHand, false);
-        gunTransform.SetLocalPositionAndRotation(new Vector3(0f, -0.08f, 0.12f), Quaternion.Euler(90f, 0f, 0f));
-        handgun.SetBulletSpawnLocalPosition(new Vector3(0f, 0f, 0.16f));
-        handgun.SetHeld(true);
+        Shader shader = Shader.Find("Universal Render Pipeline/Lit");
+        if (shader == null)
+        {
+            shader = Shader.Find("Standard");
+        }
+
+        if (shader == null)
+        {
+            return;
+        }
+
+        Material material = new(shader);
+        material.color = color;
+        renderer.material = material;
+    }
+
+    private static void RemoveVisualCollider(GameObject visual)
+    {
+        Collider collider = visual.GetComponent<Collider>();
+        if (collider != null)
+        {
+            Destroy(collider);
+        }
+    }
+
+    private void CreateGunInteraction(Transform leftHand, Transform rightHand)
+    {
+        Handgun handgun = FindFirstObjectByType<Handgun>();
+        if (handgun == null)
+        {
+            Debug.LogWarning("VRGameplayBootstrap could not find a Handgun in the scene.");
+            return;
+        }
+
+        VRGunInteraction interaction = handgun.GetComponent<VRGunInteraction>();
+        if (interaction == null)
+        {
+            interaction = handgun.gameObject.AddComponent<VRGunInteraction>();
+        }
+
+        interaction.Initialize(leftHand, rightHand);
     }
 
     private void SpawnTargets(Transform origin)
