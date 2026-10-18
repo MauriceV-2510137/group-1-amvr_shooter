@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -47,7 +48,7 @@ public class Bullet : MonoBehaviour
             target.RegisterHit(collision.GetContact(0).point);
         }
 
-        PlayHitSoundAndDestroy();
+        StartCoroutine(PlayHitSoundAndDestroy());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -56,17 +57,20 @@ public class Bullet : MonoBehaviour
         if (shootableButton == null) return;
         shootableButton.Activate();
 
-        PlayHitSoundAndDestroy();
+        StartCoroutine(PlayHitSoundAndDestroy());
     }
 
-    private void PlayHitSoundAndDestroy()
+    private IEnumerator PlayHitSoundAndDestroy()
     {
         if (!hitSound)
         {
             Destroy(gameObject);
-            return;
+            yield break;
         }
-        AudioSource.PlayClipAtPoint(hitSound, transform.position);
+
+        yield return new WaitForSeconds(0.1f);
+
+        AudioSource.PlayClipAtPoint(hitSound, transform.position, 2f);
         Destroy(gameObject);
     }
 }
