@@ -10,14 +10,14 @@ public class EnemyTarget : MonoBehaviour
 
     [Header("AI")]
     [SerializeField] private float sightRange = 30f;
-    [SerializeField] private float attackRange = 2.2f;
+    //[SerializeField] private float attackRange = 2.2f;
     [SerializeField] private float attackCooldown = 1.25f;
     [SerializeField] private float projectileSpeed = 18f;
     [SerializeField] private float projectileLifetime = 3f;
     [SerializeField] private float wanderRadius = 6f;
     [SerializeField] private float wanderInterval = 3f;
     [SerializeField] private float moveSpeed = 1.4f;
-    [SerializeField] private int playerLayer = 0;
+    //[SerializeField] private int playerLayer = 0;
 
     private float currentHealth;
     private float nextAttackTime;

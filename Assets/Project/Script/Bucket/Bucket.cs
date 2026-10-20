@@ -1,18 +1,16 @@
-using System;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
 [RequireComponent (typeof(Collider))]
 public class Bucket : MonoBehaviour
 {
-    [SerializeField]
-    private float bulletImpact = 50f;   
+    [SerializeField] private float bulletImpact = 50f;   
 
-    private Rigidbody rigidbody = null;
+    private Rigidbody rb = null;
 
     private void Awake()
     {
-        TryGetComponent(out rigidbody);        
+        TryGetComponent(out rb);        
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -26,17 +24,17 @@ public class Bucket : MonoBehaviour
 
     private void ApplyForce(Vector3 forward)
     {
-        if (!rigidbody) return;
-        rigidbody.AddForce(forward * bulletImpact);
+        if (!rb) return;
+        rb.AddForce(forward * bulletImpact);
     }
 
     [ContextMenu("Apply Force!!")]
     private void DebugTrigger()
     {
-        Vector3 randomForward = new Vector3(
-            UnityEngine.Random.Range(-10f, 10f),
-            UnityEngine.Random.Range(0f, 5f),
-            UnityEngine.Random.Range(-10f, 10f)
+        Vector3 randomForward = new (
+            Random.Range(-10f, 10f),
+            Random.Range(0f, 5f),
+            Random.Range(-10f, 10f)
         );
         randomForward = randomForward.normalized;
         ApplyForce(randomForward);

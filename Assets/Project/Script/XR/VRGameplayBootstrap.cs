@@ -7,7 +7,7 @@ public class VRGameplayBootstrap : MonoBehaviour
     public static VRGameplayBootstrap Instance { get; private set; }
 
     [SerializeField] private float moveSpeed = 2f;
-    [SerializeField] private float jumpSpeed = 5.5f;
+    //[SerializeField] private float jumpSpeed = 5.5f;
     [SerializeField] private float roundDuration = 120f;
     [SerializeField] private float additionalTargetSpawnInterval = 2f;
     [SerializeField] private int maximumActiveTargets = 40;
