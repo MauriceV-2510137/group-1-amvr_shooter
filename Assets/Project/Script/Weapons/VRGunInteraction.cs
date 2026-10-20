@@ -33,11 +33,11 @@ public class VRGunInteraction : MonoBehaviour
         CreateGripAction(0, "<XRController>{LeftHand}/grip", "<Keyboard>/q");
         CreateGripAction(1, "<XRController>{RightHand}/grip", "<Keyboard>/e");
 
-        holdingHand = FindInitialHoldingHand();
-        if (holdingHand >= 0)
-        {
-            gripWasPressed[holdingHand] = true;
-        }
+        //holdingHand = FindInitialHoldingHand();
+        //if (holdingHand >= 0)
+        //{
+        //    gripWasPressed[holdingHand] = true;
+        //}
     }
 
     private void Update()
