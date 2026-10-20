@@ -91,7 +91,6 @@ public class VRGunInteraction : MonoBehaviour
         body.useGravity = false;
         transform.SetParent(hand, false);
         transform.SetLocalPositionAndRotation(new Vector3(0f, -0.16f, 0.12f), Quaternion.Euler(90f, 0f, 0f));
-        handgun.SetBulletSpawnLocalPosition(new Vector3(0f, 0f, 0.16f));
         handgun.SetHeld(true);
     }
 

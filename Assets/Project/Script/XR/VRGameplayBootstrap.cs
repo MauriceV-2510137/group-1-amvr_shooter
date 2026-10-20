@@ -133,7 +133,7 @@ public class VRGameplayBootstrap : MonoBehaviour
 
         VRMenuController.Create(leftHand, rightHand, cameraTransform, this);
         menuCreated = true;
-        Debug.Log("VRGameplayBootstrap created the VR menu.");
+        //Debug.Log("VRGameplayBootstrap created the VR menu.");
     }
 
     private void Update()
@@ -201,7 +201,7 @@ public class VRGameplayBootstrap : MonoBehaviour
         MovingTarget target = targetObject.AddComponent<MovingTarget>();
         target.Initialize(GetRandomTargetDirection(cameraTransform), Random.Range(0f, 3f));
         target.ConfigureTier(maximumScore, Mathf.Max(10, maximumScore / 5), Color.HSVToRGB(Random.value, 0.85f, 1f));
-        Debug.Log($"Spawned additional target {targetObject.name} at radius {minimumRadius:0.0}-{maximumRadius:0.0}.");
+        //Debug.Log($"Spawned additional target {targetObject.name} at radius {minimumRadius:0.0}-{maximumRadius:0.0}.");
     }
 
     private Transform CreateTrackedHand(Transform parent, string handName, string deviceBinding)
@@ -357,7 +357,7 @@ public class VRGameplayBootstrap : MonoBehaviour
         }
 
         targetsSpawned = createdTargets == targetSizes.Length;
-        Debug.Log($"VRGameplayBootstrap restored {createdTargets}/{targetSizes.Length} floating score targets.");
+        //Debug.Log($"VRGameplayBootstrap restored {createdTargets}/{targetSizes.Length} floating score targets.");
     }
 
     private static Camera FindPlayerCamera()

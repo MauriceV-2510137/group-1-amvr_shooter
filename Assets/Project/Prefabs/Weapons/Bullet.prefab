@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bababa054eb1524685a7bb91e958fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  speed: 50
+  speed: 20
   maxFlightTime: 5
   hitSound: {fileID: 8300000, guid: 632871f8df5ade2408373e4f09ff062d, type: 3}
 --- !u!1 &7691318852637084492

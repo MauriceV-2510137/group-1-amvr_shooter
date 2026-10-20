@@ -48,14 +48,6 @@ public class Handgun : MonoBehaviour
         }
     }
 
-    public void SetBulletSpawnLocalPosition(Vector3 localPosition)
-    {
-        if (bulletSpawnPos != null)
-        {
-            bulletSpawnPos.localPosition = localPosition;
-        }
-    }
-
     public bool TryGetMuzzleRay(out Ray ray)
     {
         if (bulletSpawnPos == null)

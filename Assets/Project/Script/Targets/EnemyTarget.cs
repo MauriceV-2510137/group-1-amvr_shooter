@@ -114,7 +114,7 @@ public class EnemyTarget : MonoBehaviour
             }
         }
 
-        Debug.Log($"EnemyTarget configured. Target: {(player != null ? player.name : "none")}");
+        //Debug.Log($"EnemyTarget configured. Target: {(player != null ? player.name : "none")}");
         patrolCenter = transform.position;
         if (groundY == 0f)
         {
@@ -243,7 +243,7 @@ public class EnemyTarget : MonoBehaviour
         projectileBody.linearVelocity = direction * projectileSpeed;
         EnemyProjectile projectileBehaviour = projectile.AddComponent<EnemyProjectile>();
         projectileBehaviour.Initialize(playerHealth, projectileLifetime, damagePerShot);
-        Debug.Log($"Enemy shot fired at {player.name} for {damagePerShot} damage.");
+        //Debug.Log($"Enemy shot fired at {player.name} for {damagePerShot} damage.");
 
         Vector3 lookDirection = player.position - transform.position;
         lookDirection.y = 0f;
