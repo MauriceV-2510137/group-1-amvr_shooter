@@ -189,10 +189,6 @@ public class VRGameplayBootstrap : MonoBehaviour
         float progress = Mathf.Clamp01((additionalTargetCount - 1f) / Mathf.Max(1f, maximumActiveTargets - 7f));
         float minimumRadius = Mathf.Lerp(additionalTargetMinimumRadius, 18f, progress);
         float maximumRadius = Mathf.Lerp(additionalTargetMaximumRadius, 26f, progress);
-        float[] targetScores = { 50f, 75f, 100f, 150f, 250f };
-        int scoreIndex = additionalTargetCount % targetScores.Length;
-        int maximumScore = Mathf.RoundToInt(targetScores[scoreIndex]);
-
         GameObject targetObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         targetObject.name = $"Moving Target Extra {additionalTargetCount}";
         targetObject.transform.position = GetRandomTargetPosition(cameraTransform, minimumRadius, maximumRadius);
@@ -200,7 +196,7 @@ public class VRGameplayBootstrap : MonoBehaviour
 
         MovingTarget target = targetObject.AddComponent<MovingTarget>();
         target.Initialize(GetRandomTargetDirection(cameraTransform), Random.Range(0f, 3f));
-        target.ConfigureTier(maximumScore, Mathf.Max(10, maximumScore / 5), Color.HSVToRGB(Random.value, 0.85f, 1f));
+        target.ConfigureAppearance(Color.HSVToRGB(Random.value, 0.85f, 1f));
         //Debug.Log($"Spawned additional target {targetObject.name} at radius {minimumRadius:0.0}-{maximumRadius:0.0}.");
     }
 
@@ -301,7 +297,6 @@ public class VRGameplayBootstrap : MonoBehaviour
         }
 
         float[] targetSizes = { 0.7f, 0.58f, 0.46f, 0.34f, 0.24f, 0.7f, 0.46f };
-        int[] maximumScores = { 50, 75, 100, 150, 250, 50, 100 };
         Color[] targetColors =
         {
             new(0.95f, 0.12f, 0.08f),
@@ -329,10 +324,7 @@ public class VRGameplayBootstrap : MonoBehaviour
                     GetRandomTargetPosition(origin),
                     GetRandomTargetDirection(origin),
                     index * 0.7f);
-                target.ConfigureTier(
-                    maximumScores[index],
-                    Mathf.Max(10, maximumScores[index] / 5),
-                    targetColors[index]);
+                target.ConfigureAppearance(targetColors[index]);
                 createdTargets++;
                 continue;
             }
@@ -352,7 +344,7 @@ public class VRGameplayBootstrap : MonoBehaviour
             }
 
             target.Initialize(GetRandomTargetDirection(origin), index * 0.7f);
-            target.ConfigureTier(maximumScores[index], Mathf.Max(10, maximumScores[index] / 5), targetColors[index]);
+            target.ConfigureAppearance(targetColors[index]);
             createdTargets++;
         }
 

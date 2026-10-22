@@ -7,6 +7,10 @@ public class MovingTarget : MonoBehaviour
 {
     [SerializeField] private int maximumScore = 100;
     [SerializeField] private int minimumScore = 10;
+    [SerializeField] private float largestTargetSize = 0.7f;
+    [SerializeField] private float smallestTargetSize = 0.24f;
+    [SerializeField] private int scoreForLargestTarget = 50;
+    [SerializeField] private int scoreForSmallestTarget = 250;
     [SerializeField] private float moveAmplitude = 1.25f;
     [SerializeField] private float moveSpeed = 1.5f;
     [SerializeField] private float lifetime = 8f;
@@ -42,13 +46,21 @@ public class MovingTarget : MonoBehaviour
         RestartLifetime();
     }
 
-    public void ConfigureTier(int maximumTierScore, int minimumTierScore, Color tierColor)
+    public void ConfigureAppearance(Color targetColor)
     {
-        maximumScore = maximumTierScore;
-        minimumScore = minimumTierScore;
+        float sizeProgress = Mathf.InverseLerp(
+            largestTargetSize,
+            smallestTargetSize,
+            transform.localScale.x);
+        maximumScore = Mathf.RoundToInt(Mathf.Lerp(
+            scoreForLargestTarget,
+            scoreForSmallestTarget,
+            sizeProgress));
+        minimumScore = Mathf.Max(10, maximumScore / 5);
+
         if (targetRenderer != null)
         {
-            targetRenderer.material.color = tierColor;
+            targetRenderer.material.color = targetColor;
         }
     }
 
@@ -74,6 +86,11 @@ public class MovingTarget : MonoBehaviour
         float accuracy = Mathf.Clamp01(Vector3.Distance(transform.position, hitPosition) / targetRadius);
         int score = Mathf.RoundToInt(Mathf.Lerp(maximumScore, minimumScore, accuracy));
         VRScoreManager.AddScore(score);
+        DamagePopup.Create(
+            transform.position + Vector3.up * Mathf.Max(transform.localScale.y * 0.75f, 0.35f),
+            score,
+            false,
+            new Color(1f, 0.85f, 0.1f));
         Debug.Log($"Target hit. Aim score: {score}. Total score: {VRScoreManager.Score}");
 
         isHit = true;
